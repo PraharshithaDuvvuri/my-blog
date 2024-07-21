@@ -19,7 +19,6 @@ The most common tags used for creating tables in HTML are `<table>`,`<thead>`,`<
 
 Forms in HTML are used for collecting data from users and are sent to the backend for processing this information. While learning about forms, firstly go through the form elements. The form elements are input, label, select, options, button, and textArea. Practice these tags by taking references from [mdn docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form).
 
-
 <img src="/images/post1/form1.webp" alt="form1" />
 
 <p class="-mt-6 font-bold text-sm" align="center">Usage of form elements part 1.</p>
@@ -41,7 +40,6 @@ Radio buttons can be called mcq’s where only one option can be chosen by the u
 ### Checkboxes
 
 Checkboxes can be called mcq’s where multiple options can be chosen by the user. Here, the ‘name’ attribute should not be the same for different checkboxes because any no. of checkboxes can be selected at a time by the user.
-
 
 <img src="/images/post1/checkbox.webp" alt="checkbox" />
 
