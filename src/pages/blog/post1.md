@@ -1,226 +1,48 @@
 ---
 layout: "../../layouts/blog-layout.astro"
-title: Implement fetching & caching mechanism in React
-description: React custom hooks encapsulate reusable logic, enhancing code quality and scalability.
+title: Tables and Forms in HTML simplified.
+description: A blog about HTML table and form elements.
 published: 01-10-2023
 ---
 
-To fetch data from an API and display a response in a React application, you need to create a component that handles the API request. Inside the component, you can use the useState hook to initialize a state variable to hold the fetched data. Then, use the useEffect hook to fetch the data when the component mounts. Inside the useEffect hook, make an HTTP request to the API using methods like fetch or a library like Axios. Once you receive the response, update the state variable with the fetched data. Finally, render the response in the component's JSX, accessing the relevant data from the state.
+<img src="/images/post1/cover.webp" alt="cover"/>
 
-Yup, that is great but so much code, and not efficient, The main thing is you can't cache your API responses, So if your server is a bit slow and you don’t want to keep requesting the same query then caching at the client side will be the option for you. Caching API responses can improve the performance and efficiency of your application by reducing unnecessary network requests.
+<p class="-mt-6 font-bold text-sm" align="center">HTML sample tags</p>
 
-There are plenty of libraries that give you this out of the box, such as <a href="https://tanstack.com/query/latest">TanStackQuery </a> and a few more.
+HTML is a markup language that is being used for developing websites. It has three types of tags: structural, semantic, and formatting. These tags can be learned from [mdn docs](https://developer.mozilla.org/en-US/docs/Web/HTML) and [W3 schools](https://www.w3schools.com/html/) etc. But here is a tip for simplifying this journey. After going through basic HTML tags, practice the usage in [visual studio code](https://code.visualstudio.com/download). The most important extensions to be installed in vs code are prettier and live server. Then go through the [emmet shortcuts](https://docs.emmet.io/abbreviations/).
 
-Understanding how things work instead of relying solely on libraries can have several advantages:
+### Tables in HTML
 
-- Flexibility and customization: When you have a deep understanding of how things work, you have more control and flexibility over your code. You can customize and adapt solutions to meet specific requirements without being limited by the functionalities provided by a library.
-- Troubleshooting and debugging: When you encounter issues or bugs in your code, having a deeper understanding of the underlying mechanisms can help you troubleshoot and debug more effectively. You can identify and fix problems by examining the code and the logic behind it.
-- Efficiency and performance: Libraries often have additional overhead, such as extra dependencies, size, or processing time. By understanding how things work, you can optimize your code for efficiency and performance, avoiding unnecessary dependencies or streamlining processes.
-- Learning and growth: Exploring how things work on a fundamental level allows you to expand your knowledge and skills. It enhances your ability to grasp new concepts, solve complex problems, and adapt to changing technologies and frameworks.
+The most common tags used for creating tables in HTML are `<table>`,`<thead>`,`<th>`,`<tbody>`,`<tr>`,`<td>`, and `<tfoot>`.`<table>` tag is used to indicate the compiler that we want to create a table.`<thead>` tag is used to indicate that we want to give headings to our table.`<th>` tag is used inside `<thead>` tag for creating different elements i.e. n no. of `<th>` tags for n no. of columns.`<tbody>` tag indicates that the content or the actual data will be placed here.`<tr>` tag is used to indicate that we want to create a row in our table.`<td>` tag is used to indicate a specific data cell((row,col) or(1,2)). `<tfoot>` tag is used to indicate that we want to create a footer element for our table. The border=”1" attribute can be added to create borders for the table.Sometimes in caseof complex tables, there can be multiple rows inside `<thead>` tag. Take sample tables from the internet and start practicing on your own.
 
-However, it’s important to strike a balance. Libraries and frameworks can provide convenience, speed up development, and handle complex tasks more efficiently. They are often built by experts and undergo rigorous testing. Leveraging libraries can save time and effort, especially for common or well-established functionalities.
+### Forms in HTML
 
-Ultimately, the choice between understanding how things work and relying on libraries depends on the specific context, project requirements, and personal preferences. A combination of both approaches can often yield the best results, leveraging libraries when appropriate and delving into the underlying concepts when necessary.
+Forms in HTML are used for collecting data from users and are sent to the backend for processing this information. While learning about forms, firstly go through the form elements. The form elements are input, label, select, options, button, and textArea. Practice these tags by taking references from [mdn docs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form).
 
-To understand what is caching let's understand first what is cache. In computing, a cache is a temporary storage location that stores frequently accessed data or instructions to expedite future requests for that data. The purpose of a cache is to improve system performance by reducing the time and resources required to retrieve data from the source.
 
-Okay now we understand that cache means temporary data storage, so how do we store this cache, but more importantly when we store some data how will we access the particular data you need efficiently? So you can store a cache with a key. So the best way is a creating an object with keys and data as values, or a map data structure to perform the same.
+<img src="/images/post1/form1.webp" alt="form1" />
 
-So here starts the implementation of cache in react (not fetching just caching).
+<p class="-mt-6 font-bold text-sm" align="center">Usage of form elements part 1.</p>
 
-This cache should be available to all components, so let's keep this context and wrap over the main component.
+<img src="/images/post1/form2.webp" alt="form2" />
 
-```tsx
-import { createContext, useContext, ReactNode } from "react";
+<p class="-mt-6 font-bold text-sm" align="center">Usage of form elements part 2.</p>
 
-type ContextType = {
-  getCache: (key: string) => any;
-  setCache: (key: string, value: any, ttl?: number) => void;
-  clearCache: () => void;
-  deleteCache: (key: string) => void;
-};
+The concept of radio buttons and checkboxes is pretty much important. These are the most frequently used in developing real-time forms.
 
-type cacheBody = {
-  expiry: Date;
-  data: any;
-};
+### Radio Buttons
 
-const CacheContext = createContext<ContextType | null>(null);
+Radio buttons can be called mcq’s where only one option can be chosen by the user. In order to achieve this, we use the ‘name’ attribute. The ‘name’ attribute value should be the same so that similar options can be grouped as one.
 
-export function useCache() {
-  return useContext(CacheContext) as ContextType;
-}
+<img src="/images/post1/radio.webp" alt="radio" />
 
-export default function CacheProvider({ children }: { children: ReactNode }) {
-  const map = new Map<string, cacheBody>();
+<p class="-mt-6 font-bold text-sm" align="center">Example for radio buttons.</p>
 
-  function getCache(key: string) {
-    const cacheValue = map.get(key);
-    if (!cacheValue) return undefined;
-    if (new Date().getTime() > cacheValue.expiry.getTime()) {
-      map.delete(key);
-      return undefined;
-    }
-    return cacheValue.data;
-  }
+### Checkboxes
 
-  function setCache(key: string, value: any, ttl: number = 10) {
-    var t = new Date();
-    t.setSeconds(t.getSeconds() + ttl);
-    map.set(key, {
-      expiry: t,
-      data: value,
-    });
-  }
+Checkboxes can be called mcq’s where multiple options can be chosen by the user. Here, the ‘name’ attribute should not be the same for different checkboxes because any no. of checkboxes can be selected at a time by the user.
 
-  function clearCache() {
-    map.clear();
-  }
 
-  function deleteCache(key: string) {
-    map.delete(key);
-  }
+<img src="/images/post1/checkbox.webp" alt="checkbox" />
 
-  const contextValue = {
-    getCache,
-    setCache,
-    clearCache,
-    deleteCache,
-  };
-
-  return (
-    <CacheContext.Provider value={contextValue}>
-      {children}
-    </CacheContext.Provider>
-  );
-}
-```
-
-As now the context is created let's wrap our App with this `<CacheContext>`. We can see the cache context gives you four methods to set, delete, get & empty the cache, The set method takes a key string, a value of type any, and a TTL (Time to live in seconds) which determines when this cache should be invalidated. The get method gives you a cache if present under expiry time otherwise gives you undefined, The other two functions are to remove a cache or to empty a cache respectively.
-
-```tsx
-<CacheProvider>
-  <App />
-</CacheProvider>
-```
-
-So, now our caching mechanism is ready, but as we aim to cache the API responses, But now if we check if the cache is present in every component while making a request would not be a great idea. Instead, we can create a custom hook that will do everything for us out of the box, We just need to provide the API URL, key, and a few configs.
-
-```tsx
-import { useEffect, useState } from "react";
-import { useCache } from "../contexts/Cache";
-import axios, { AxiosRequestConfig, AxiosError } from "axios";
-
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-type CacheEnable =
-  | {
-      enabled: true;
-      ttl?: number;
-      suspense?: number;
-    }
-  | {
-      enabled: false;
-    };
-
-type CustomAxiosConfig<T = any> = AxiosRequestConfig & {
-  key: Array<unknown>;
-  initialEnabled?: boolean;
-  cache?: CacheEnable;
-  onSuccess?: (data: T) => void;
-  onFailure?: (err: AxiosError) => void;
-};
-
-function keyify(key: CustomAxiosConfig["key"]) {
-  return key.map((item) => JSON.stringify(item)).join("-");
-}
-
-export default function useFetch<T = any>({
-  key,
-  initialEnabled = true,
-  cache,
-  ...axiosConfig
-}: CustomAxiosConfig<T>) {
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<T | undefined>();
-  const [error, setError] = useState<any>();
-  const { getCache, setCache, deleteCache } = useCache();
-
-  const refetch = (hard: boolean = false) => {
-    setLoading(true);
-    setError(undefined);
-    const cacheKey = keyify(key);
-    if (cache?.enabled && getCache(cacheKey) !== undefined && !hard) {
-      const val = getCache(cacheKey);
-      delay(cache.suspense || 400).then(() => {
-        setData(val);
-        setLoading(false);
-        setError(undefined);
-      });
-    } else {
-      axios(axiosConfig)
-        .then(({ data }) => {
-          setData(data as T);
-          if (cache?.enabled) setCache(cacheKey, data, cache.ttl ?? 20);
-        })
-        .catch((err: AxiosError) => {
-          setError(err);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    }
-  };
-
-  function inValidate(invalidationKey: CustomAxiosConfig["key"]) {
-    deleteCache(keyify(invalidationKey));
-  }
-
-  useEffect(() => {
-    if (initialEnabled) refetch();
-    // eslint-disable-next-line
-  }, []);
-
-  return { loading, data, error, refetch, inValidate } as const;
-}
-```
-
-Here is a custom hook called useFetch which can be called a component and it provides you with all the benefits of state management. You don’t have to maintain multiple states such as loading, error, and data in components. This is all returned by the hook itself. The hook also provides you methods to refetch and invalidate a query.
-
-```tsx
-import useFetch from "./hooks/useFetch";
-import type { User } from "./User.type";
-import "./styles.css";
-
-type APIUserResponse = {
-  results: User[];
-};
-
-export default function App() {
-  const { loading, error, data, refetch } = useFetch<APIUserResponse>({
-    url: "https://randomuser.me/api",
-    method: "get",
-    key: ["app", "get", "user", { name: "nisab" }],
-    cache: {
-      enabled: true,
-      ttl: 10,
-      suspense: 400,
-    },
-  });
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-  if (error) {
-    return <p>Something went wrong</p>;
-  }
-
-  return (
-    <div className="App">
-      {JSON.stringify(data?.results[0])}
-      <button onClick={() => refetch()}>Get user</button>
-    </div>
-  );
-}
-```
+<p class="-mt-6 font-bold text-sm" align="center">Example for checkbox.</p>
